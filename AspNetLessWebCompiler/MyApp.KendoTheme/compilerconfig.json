@@ -1,0 +1,26 @@
+﻿[
+  {
+    // output should be in styles/web/ - root folder of the themes
+    "inputFile": "styles/kendo.custom.less",
+    "outputFile": "styles/web/kendo.custom.css",
+    "minify": {
+      "enabled": true
+    },
+    "options": {
+      "sourceMap": false,
+      "relativeUrls": true
+    }
+  },
+  {
+    // output should be in styles/web/ - root folder of the themes
+    "inputFile": "styles/web/kendo.common-bootstrap.core.less",
+    "outputFile": "styles/web/kendo.custom.common.css",
+    "minify": {
+      "enabled": true
+    },
+    "options": {
+      "sourceMap": false,
+      "relativeUrls": true
+    }
+  }
+]
