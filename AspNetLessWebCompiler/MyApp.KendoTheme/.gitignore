@@ -1,2 +1,5 @@
 # Auto-generated files
 styles/web/kendo.custom*.css
+
+# Theme Package
+Dist/

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+
+    <BuildDependsOn>
+      $(BuildDependsOn);
+      CompileKendoTheme
+    </BuildDependsOn>
+
+    <ThemeFolder>styles\web\</ThemeFolder>
+    <ThemeContentsOutputFolder>Dist\</ThemeContentsOutputFolder>
+    <WebProjectDestinationFolder>..\MyApp.Web\Content\kendo\</WebProjectDestinationFolder>
+
+  </PropertyGroup>
+
+  <Target Name="CompileKendoTheme" DependsOnTargets="CompileThemeOutput;CopyThemeToWebProject">
+  </Target>
+
+  <Target Name="CompileThemeOutput">
+    <ItemGroup>
+      <ThemeCssToCopy Include="$(ThemeFolder)\kendo.custom*.css" />
+      <ThemeFilesToCopy Include="$(ThemeFolder)\Bootstrap\*.*" />
+      <ThemeImagesToCopy Include="$(ThemeFolder)\images\*.*" />
+      <ThemeTexturesToCopy Include="$(ThemeFolder)\textures\*.*" />
+      <ThemeFontsToCopy Include="$(ThemeFolder)\fonts\**\*.*" />
+      <ThemeDataVizToCopy Include="$(ThemeFolder)..\kendo.adr.json" />
+    </ItemGroup>
+
+    <Message Text="Copying theme files" Importance="high" />
+
+    <Copy SourceFiles="@(ThemeCssToCopy)" DestinationFolder="$(ThemeContentsOutputFolder)" />
+    <Copy SourceFiles="@(ThemeFilesToCopy)" DestinationFolder="$(ThemeContentsOutputFolder)Bootstrap" />
+    <Copy SourceFiles="@(ThemeImagesToCopy)" DestinationFolder="$(ThemeContentsOutputFolder)images" />
+    <Copy SourceFiles="@(ThemeTexturesToCopy)" DestinationFolder="$(ThemeContentsOutputFolder)textures" />
+    <Copy SourceFiles="@(ThemeFontsToCopy)" DestinationFolder="$(ThemeContentsOutputFolder)fonts\%(RecursiveDir)" />
+    <Copy SourceFiles="@(ThemeDataVizToCopy)" DestinationFolder="$(ThemeContentsOutputFolder)" />
+  </Target>
+
+  <Target Name="CopyThemeToWebProject">
+    <ItemGroup>
+      <ThemePackageToCopy Include="$(ThemeContentsOutputFolder)**\*.*" Exclude="$(ThemeContentsOutputFolder)**\*.less;$(ThemeContentsOutputFolder)**\Thumbs.db;"/>
+    </ItemGroup>
+
+    <Message Text="Copying theme files to Web project" Importance="high" />
+
+    <Copy SourceFiles="@(ThemePackageToCopy)" DestinationFolder="$(WebProjectDestinationFolder)%(RecursiveDir)" OverwriteReadOnlyFiles="true" />
+  </Target>
+
+</Project>
