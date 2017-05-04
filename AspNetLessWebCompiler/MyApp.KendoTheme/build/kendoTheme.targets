@@ -8,7 +8,8 @@
       CompileKendoTheme
     </BuildDependsOn>
 
-    <ThemeFolder>styles\web\</ThemeFolder>
+    <StylesFolder>styles\web\</StylesFolder>
+    <ThemeName>Bootstrap</ThemeName>
     <ThemeContentsOutputFolder>Dist\</ThemeContentsOutputFolder>
     <WebProjectDestinationFolder>..\MyApp.Web\Content\kendo\</WebProjectDestinationFolder>
 
@@ -19,18 +20,21 @@
 
   <Target Name="CompileThemeOutput">
     <ItemGroup>
-      <ThemeCssToCopy Include="$(ThemeFolder)\kendo.custom*.css" />
-      <ThemeFilesToCopy Include="$(ThemeFolder)\Bootstrap\*.*" />
-      <ThemeImagesToCopy Include="$(ThemeFolder)\images\*.*" />
-      <ThemeTexturesToCopy Include="$(ThemeFolder)\textures\*.*" />
-      <ThemeFontsToCopy Include="$(ThemeFolder)\fonts\**\*.*" />
-      <ThemeDataVizToCopy Include="$(ThemeFolder)..\kendo.adr.json" />
+      <ThemeCssToCopy Include="$(StylesFolder)\kendo.custom*.css" />
+      <ThemeFilesToCopy Include="$(StylesFolder)\$(ThemeName)\*.*" />
+      <ThemeImagesToCopy Include="$(StylesFolder)\images\*.*" />
+      <ThemeTexturesToCopy Include="$(StylesFolder)\textures\*.*" />
+      <ThemeFontsToCopy Include="$(StylesFolder)\fonts\**\*.*" />
+      <ThemeDataVizToCopy Include="$(StylesFolder)..\kendo.adr.json" />
     </ItemGroup>
 
+    <Message Text="Cleaning theme output folder." Importance="high" />
+    <RemoveDir Directories="$(ThemeContentsOutputFolder)" />
+    
     <Message Text="Copying theme files" Importance="high" />
 
     <Copy SourceFiles="@(ThemeCssToCopy)" DestinationFolder="$(ThemeContentsOutputFolder)" />
-    <Copy SourceFiles="@(ThemeFilesToCopy)" DestinationFolder="$(ThemeContentsOutputFolder)Bootstrap" />
+    <Copy SourceFiles="@(ThemeFilesToCopy)" DestinationFolder="$(ThemeContentsOutputFolder)$(ThemeName)" />
     <Copy SourceFiles="@(ThemeImagesToCopy)" DestinationFolder="$(ThemeContentsOutputFolder)images" />
     <Copy SourceFiles="@(ThemeTexturesToCopy)" DestinationFolder="$(ThemeContentsOutputFolder)textures" />
     <Copy SourceFiles="@(ThemeFontsToCopy)" DestinationFolder="$(ThemeContentsOutputFolder)fonts\%(RecursiveDir)" />
